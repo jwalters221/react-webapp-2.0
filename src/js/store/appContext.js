@@ -31,11 +31,15 @@ const injectContext = PassedComponent => {
 			 *
 			 */
 
-			fetch("https://swapi.co/api/planets/")
-				.then(response => response.json())
-				.then(data => {
-					setState({ ...state, store: { ...state.store, planets: data.results } });
+			let urls = ["https://swapi.co/api/planets/", "https://swapi.co/api/people/"];
+			let promises = urls.map(url => fetch(url).then(response => response.json()));
+			Promise.all(promises).then(results => {
+				let { store, actions } = state;
+				setState({
+					store: { ...store, planets: results[0].results, people: results[1].results },
+					actions
 				});
+			});
 		}, []);
 
 		// the initial value for the context its not null anymore, but the current state of this component,
