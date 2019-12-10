@@ -15,6 +15,7 @@ export const Demo = () => {
 					return (
 						<li key={index} className="list-group-item d-flex justify-content-between">
 							{item.name}
+							<Link to={`/single/${index}`}>View Details</Link>
 						</li>
 					);
 				})}
